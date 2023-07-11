@@ -20,4 +20,14 @@ class FriendRepositorie {
     }
   }
 
+  public async getFriends(): Promise<IFriendDTO[]> {
+    try {
+      const friend = await this.prisma.friend.findMany();
+      return friend;
+    } catch (e) {
+      console.log(e);
+      return []
+    }
+  }
+
 }
