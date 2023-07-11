@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Amigo {
+  id         Int          @id @default(autoincrement())
+  nome       String
+  email      String       @unique
+  telefone   String
+  Emprestimo Emprestimo[]
+
+  @@map("tb_amigos")
+}
+
+model Ferramenta {
+  id             Int          @id @default(autoincrement())
+  nome           String
+  marca          String
+  custoAquisicao Int          @unique @map(name: "custo_aquisicao")
+  Emprestimo     Emprestimo[]
+
+  @@map("tb_ferramentas")
+}
+
+model Emprestimo {
+  id             Int        @id @default(autoincrement())
+  idAmigo        Int        @map(name: "idAmigo")
+  amigo          Amigo      @relation(fields: [idAmigo], references: [id])
+  idFerramenta   Int        @map(name: "id_ferramenta")
+  ferramenta     Ferramenta @relation(fields: [idFerramenta], references: [id])
+  dataEmprestimo DateTime   @map(name: "data_emprestimo")
+  dataDevolucao  DateTime   @map(name: "data_devolucao")
+  devolvido      Boolean
+
+  @@map("tb_emprestimos")
+}
+
+model Teste {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+
+  @@map("testes")
+}
