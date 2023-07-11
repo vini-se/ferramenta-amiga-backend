@@ -21,31 +21,31 @@ model Amigo {
 }
 
 model Ferramenta {
-  id              Int          @id @default(autoincrement())
-  nome            String
-  marca           String
-  custo_aquisicao Int          @unique
-  Emprestimo      Emprestimo[]
+  id             Int          @id @default(autoincrement())
+  nome           String
+  marca          String
+  custoAquisicao Int          @unique @map(name: "custo_aquisicao")
+  Emprestimo     Emprestimo[]
 
   @@map("tb_ferramentas")
 }
 
 model Emprestimo {
-  id              Int        @id @default(autoincrement())
-  id_amigo        Int
-  amigo           Amigo      @relation(fields: [id_amigo], references: [id])
-  id_ferramenta   Int
-  ferramenta      Ferramenta @relation(fields: [id_ferramenta], references: [id])
-  data_emprestimo DateTime
-  data_devolucao  DateTime
-  devolvido       Boolean
+  id             Int        @id @default(autoincrement())
+  idAmigo        Int        @map(name: "idAmigo")
+  amigo          Amigo      @relation(fields: [idAmigo], references: [id])
+  idFerramenta   Int        @map(name: "id_ferramenta")
+  ferramenta     Ferramenta @relation(fields: [idFerramenta], references: [id])
+  dataEmprestimo DateTime   @map(name: "data_emprestimo")
+  dataDevolucao  DateTime   @map(name: "data_devolucao")
+  devolvido      Boolean
 
   @@map("tb_emprestimos")
 }
 
 model Teste {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map(name: "created_at")
 
   @@map("testes")
 }
