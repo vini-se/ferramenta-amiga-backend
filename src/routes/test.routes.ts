@@ -4,11 +4,6 @@ import { ModuleTestController } from "../modules/moduleTest/useCases/moduleTestC
 const TestRoutes = Router();
 const testController = new ModuleTestController().handle;
 
-TestRoutes.get("/test", (request, response) => {
-  console.log('entrou na rota teste')
-
-  return response.json({ message: "Hello World!" });
-
-})
+TestRoutes.get("/test", testController)
 
 export { TestRoutes };
