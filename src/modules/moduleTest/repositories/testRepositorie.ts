@@ -1,12 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { ITestData } from "./dto/testDto";
-const prisma = new PrismaClient();
 
 class TestRepositorie {
 
+  private readonly prisma: PrismaClient;
+
+  constructor() {
+    this.prisma = new PrismaClient();
+  }
+
   public async createTest() {
     try {
-      const test = await prisma.teste.create({});
+      const test = await this.prisma.teste.create({});
       console.log(`O teste ${test.id} foi criado com sucesso!`)
       return test;
     }catch (e){
@@ -16,7 +21,7 @@ class TestRepositorie {
 
   public async getTests(): Promise<ITestData[]>  {
     try {
-      const test = await prisma.teste.findMany();
+      const test = await this.prisma.teste.findMany();
       return test;
     }catch (e){
       console.log(e);
@@ -26,7 +31,7 @@ class TestRepositorie {
 
   public async getTestById(id: number): Promise<ITestData | null>  {
     try {
-      const test = await prisma.teste.findFirst({
+      const test = await this.prisma.teste.findFirst({
         where: {
           id: id
         }
@@ -40,7 +45,7 @@ class TestRepositorie {
 
   public async updateTest(data: ITestData): Promise<ITestData | null>  {
     try {
-      const test = await prisma.teste.update({
+      const test = await this.prisma.teste.update({
         where: {
           id: data.id
         },
@@ -56,7 +61,7 @@ class TestRepositorie {
 
   public async deleteTest(id: number): Promise<boolean>  {
     try {
-      const test = await prisma.teste.delete({
+      const test = await this.prisma.teste.delete({
         where: {
           id: id
         }
