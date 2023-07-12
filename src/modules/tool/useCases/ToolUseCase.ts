@@ -30,3 +30,5 @@ class ToolUseCase {
   }
 
 }
+
+export default ToolUseCase;
