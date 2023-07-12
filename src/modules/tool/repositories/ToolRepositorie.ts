@@ -1,6 +1,6 @@
 import { PrismaClient, Tool } from "@prisma/client";
 import prisma from "../../../public/prisma/PrismaSingleton";
-import { IToolData } from "../interfaces/IToolData";
+import { IToolData } from "./interfaces/IToolData";
 
 class ToolRepositorie {
   private readonly prisma: PrismaClient;
