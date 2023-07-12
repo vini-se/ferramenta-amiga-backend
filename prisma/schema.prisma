@@ -17,34 +17,28 @@ model Friend {
   tel   String @map(name: "telefone")
   Loan  Loan[]
 
-  @@map("tb_friends")
+  @@map("tb_amigos")
 }
 
 model Tool {
-  id    Int    @id @default(autoincrement())
-  name  String @map(name: "nome")
-  brand String @map(name: "marca")
-  Loan  Loan[]
+  id         Int     @id @default(autoincrement())
+  name       String  @map(name: "nome")
+  brand      String  @map(name: "marca")
+  isLoanable Boolean @map(name: "emprestavel")
+  Loan       Loan[]
 
-  @@map("tb_tools")
+  @@map("tb_ferramentas")
 }
 
 model Loan {
-  id         Int      @id @default(autoincrement())
-  idFriend   Int      @map(name: "id_amigo")
-  friend     Friend   @relation(fields: [idFriend], references: [id])
-  idTool     Int      @map(name: "id_ferramenta")
-  tool       Tool     @relation(fields: [idTool], references: [id])
-  loanedAt   DateTime @map(name: "data_emprestimo")
+  id           Int      @id @default(autoincrement())
+  idFriend     Int      @map(name: "id_amigo")
+  friend       Friend   @relation(fields: [idFriend], references: [id])
+  idTool       Int      @map(name: "id_ferramenta")
+  tool         Tool     @relation(fields: [idTool], references: [id])
+  loanedAt     DateTime @map(name: "data_emprestimo")
   dateToReturn DateTime @map(name: "data_para_devolver")
   returnedAt   Boolean  @map(name: "devolvido_em")
 
   @@map("tb_emprestimos")
-}
-
-model Teste {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map(name: "created_at")
-
-  @@map("testes")
 }
