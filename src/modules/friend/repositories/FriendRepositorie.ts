@@ -1,11 +1,12 @@
 import { PrismaClient, Friend } from "@prisma/client";
 import { IFriendDTO } from "./dto/IFriendDTO";
+import prisma from "../../../public/prisma/PrismaSingleton";
 
 class FriendRepositorie {
   private readonly prisma: PrismaClient;
 
   constructor() {
-    this.prisma = new PrismaClient();
+    this.prisma = prisma;
   }
 
   public async createFriend(data: IFriendDTO): Promise<Friend | null> {
