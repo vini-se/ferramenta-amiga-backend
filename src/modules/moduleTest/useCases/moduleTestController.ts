@@ -27,8 +27,6 @@ class ModuleTestController {
 
     public async getById(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
-        console.log("To no controller")
-        console.log(id)
         const moduleTestUseCase = container.resolve(ModuleTestUseCase);
         const result = await moduleTestUseCase.getById(Number(id));
         return res.json(result);

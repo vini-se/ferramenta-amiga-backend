@@ -10,35 +10,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Amigo {
-  id         Int          @id @default(autoincrement())
-  nome       String
-  email      String       @unique
-  telefone   String
-  Emprestimo Emprestimo[]
+model Friend {
+  id    Int    @id @default(autoincrement())
+  name  String @map(name: "nome")
+  email String @unique
+  tel   String @map(name: "telefone")
+  Loan  Loan[]
 
-  @@map("tb_amigos")
+  @@map("tb_friends")
 }
 
-model Ferramenta {
-  id             Int          @id @default(autoincrement())
-  nome           String
-  marca          String
-  custoAquisicao Int          @unique @map(name: "custo_aquisicao")
-  Emprestimo     Emprestimo[]
+model Tool {
+  id    Int    @id @default(autoincrement())
+  name  String @map(name: "nome")
+  brand String @map(name: "marca")
+  Loan  Loan[]
 
-  @@map("tb_ferramentas")
+  @@map("tb_tools")
 }
 
-model Emprestimo {
-  id             Int        @id @default(autoincrement())
-  idAmigo        Int        @map(name: "idAmigo")
-  amigo          Amigo      @relation(fields: [idAmigo], references: [id])
-  idFerramenta   Int        @map(name: "id_ferramenta")
-  ferramenta     Ferramenta @relation(fields: [idFerramenta], references: [id])
-  dataEmprestimo DateTime   @map(name: "data_emprestimo")
-  dataDevolucao  DateTime   @map(name: "data_devolucao")
-  devolvido      Boolean
+model Loan {
+  id         Int      @id @default(autoincrement())
+  idFriend   Int      @map(name: "id_amigo")
+  friend     Friend   @relation(fields: [idFriend], references: [id])
+  idTool     Int      @map(name: "id_ferramenta")
+  tool       Tool     @relation(fields: [idTool], references: [id])
+  loanedAt   DateTime @map(name: "data_emprestimo")
+  dateToReturn DateTime @map(name: "data_para_devolver")
+  returnedAt   Boolean  @map(name: "devolvido_em")
 
   @@map("tb_emprestimos")
 }
