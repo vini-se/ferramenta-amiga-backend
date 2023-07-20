@@ -6,75 +6,100 @@ import { ILoanData } from "../repositories/interfaces/ILoanData";
 class LoanController {
 
   async getLoanById(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-
-    const loanUseCase = container.resolve(LoanUseCase);
-    const loan = await loanUseCase.getLoanById(Number(id));
-    return res.json({data: loan});
+    try {
+      const { id } = req.params;
+      const loanUseCase = container.resolve(LoanUseCase);
+      const loan = await loanUseCase.getLoanById(Number(id));
+      return res.json({ data: loan });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 
   async getLoans(req: Request, res: Response): Promise<Response> {
-    const loanUseCase = container.resolve(LoanUseCase);
-    const loans = await loanUseCase.getLoans();
-    return res.json({data: loans});
+    try {
+      const loanUseCase = container.resolve(LoanUseCase);
+      const loans = await loanUseCase.getLoans();
+      return res.json({ data: loans });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 
   async getAllLoans(req: Request, res: Response): Promise<Response> {
-    const loanUseCase = container.resolve(LoanUseCase);
-    const loans = await loanUseCase.getAllLoans();
-    return res.json({data: loans});
+    try {
+      const loanUseCase = container.resolve(LoanUseCase);
+      const loans = await loanUseCase.getAllLoans();
+      return res.json({ data: loans });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 
   async createLoan(req: Request, res: Response): Promise<Response> {
-    const { idFriend, idTool, dateToReturn } = req.body;
-
-    const data: ILoanData = {
-      idFriend: idFriend,
-      idTool: idTool,
-      dateToReturn: new Date(dateToReturn)
+    try {
+      const { idFriend, idTool, dateToReturn } = req.body;
+      const data: ILoanData = {
+        idFriend: idFriend,
+        idTool: idTool,
+        dateToReturn: new Date(dateToReturn)
+      }
+      const loanUseCase = container.resolve(LoanUseCase);
+      const loan = await loanUseCase.createLoan(data);
+      return res.status(201).json({ data: loan });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
-
-    const loanUseCase = container.resolve(LoanUseCase);
-    const loan = await loanUseCase.createLoan(data);
-    return res.json({data: loan});
   }
 
   async updateLoan(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-    const { idFriend, idTool, dateToReturn, returnedAt } = req.body;
-
-    const data: ILoanData = {
-      idFriend: idFriend,
-      idTool: idTool,
-      dateToReturn: dateToReturn,
-      returnedAt: returnedAt,
+    try {
+      const { id } = req.params;
+      const { idFriend, idTool, dateToReturn, returnedAt } = req.body;
+      const data: ILoanData = {
+        idFriend: idFriend,
+        idTool: idTool,
+        dateToReturn: dateToReturn,
+        returnedAt: returnedAt,
+      }
+      const loanUseCase = container.resolve(LoanUseCase);
+      const loan = await loanUseCase.updateLoan(Number(id), data);
+      return res.json({ data: loan });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
-
-    const loanUseCase = container.resolve(LoanUseCase);
-    const loan = await loanUseCase.updateLoan(Number(id), data);
-    return res.json({data: loan});
   }
 
   async deleteLoan(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-
-    const loanUseCase = container.resolve(LoanUseCase);
-    const loan = await loanUseCase.deleteLoan(Number(id));
-    return res.json({data: loan});
+    try {
+      const { id } = req.params;
+      const loanUseCase = container.resolve(LoanUseCase);
+      const loan = await loanUseCase.deleteLoan(Number(id));
+      return res.json({ data: loan });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 
   async getLoansWithFriendAndToolNames(req: Request, res: Response): Promise<Response> {
-    const loanUseCase = container.resolve(LoanUseCase);
-    const loans = await loanUseCase.getLoansWithFriendAndToolNames();
-    return res.json({data: loans});
+    try {
+      const loanUseCase = container.resolve(LoanUseCase);
+      const loans = await loanUseCase.getLoansWithFriendAndToolNames();
+      return res.json({ data: loans });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 
   async getLoanWithFriendAndToolNamesById(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-
-    const loanUseCase = container.resolve(LoanUseCase);
-    const loan = await loanUseCase.getLoanWithFriendAndToolNamesById(Number(id));
-    return res.json({data: loan});
+    try {
+      const { id } = req.params;
+      const loanUseCase = container.resolve(LoanUseCase);
+      const loan = await loanUseCase.getLoanWithFriendAndToolNamesById(Number(id));
+      return res.json({ data: loan });
+    } catch (error) {
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 
 }
