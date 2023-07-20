@@ -12,33 +12,33 @@ datasource db {
 
 model Friend {
   id    Int    @id @default(autoincrement())
-  name  String @map(name: "nome")
+  name  String
   email String @unique
-  tel   String @map(name: "telefone")
+  tel   String
   Loan  Loan[]
 
-  @@map("tb_amigos")
+  @@map("tb_friends")
 }
 
 model Tool {
   id         Int     @id @default(autoincrement())
-  name       String  @map(name: "nome")
-  brand      String  @map(name: "marca")
-  isLoanable Boolean @map(name: "emprestavel")
+  name       String
+  brand      String
+  isLoanable Boolean
   Loan       Loan[]
 
-  @@map("tb_ferramentas")
+  @@map("tb_tools")
 }
 
 model Loan {
-  id           Int      @id @default(autoincrement())
-  idFriend     Int      @map(name: "id_amigo")
-  friend       Friend   @relation(fields: [idFriend], references: [id])
-  idTool       Int      @map(name: "id_ferramenta")
-  tool         Tool     @relation(fields: [idTool], references: [id])
-  loanedAt     DateTime @map(name: "data_emprestimo")
-  dateToReturn DateTime @map(name: "data_para_devolver")
-  returnedAt   Boolean  @map(name: "devolvido_em")
+  id           Int       @id @default(autoincrement())
+  idFriend     Int
+  friend       Friend    @relation(fields: [idFriend], references: [id])
+  idTool       Int
+  tool         Tool      @relation(fields: [idTool], references: [id])
+  loanedAt     DateTime  @default(now())
+  dateToReturn DateTime
+  returnedAt   DateTime?
 
-  @@map("tb_emprestimos")
+  @@map("tb_loan")
 }
